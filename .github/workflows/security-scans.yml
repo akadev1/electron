@@ -1,0 +1,47 @@
+name: Security Scans
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-scans:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run npm audit
+        run: npm audit
+
+      - name: Run Snyk
+        run: npx snyk test
+
+      - name: Upload npm audit results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: npm-audit-results
+          path: npm-audit.json
+
+      - name: Upload Snyk results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: snyk-results
+          path: snyk.json
