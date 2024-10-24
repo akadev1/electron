@@ -36,6 +36,7 @@
 				"dbaeumer.vscode-eslint",
 				"shakram02.bash-beautify",
 				"marshallofsound.gnls-electron",
+				"esbenp.prettier-vscode"
 			],
 			"settings": {
 				"editor.tabSize": 2,
