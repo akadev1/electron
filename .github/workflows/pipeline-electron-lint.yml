@@ -69,6 +69,7 @@ jobs:
         cd src/electron
         node script/yarn install --frozen-lockfile
         node script/yarn lint
+        node script/yarn prettier --write .
     - name: Run Script Typechecker
       shell: bash
       run: |

@@ -46,6 +46,7 @@
     "minimist": "^1.2.8",
     "null-loader": "^4.0.1",
     "pre-flight": "^2.0.0",
+    "prettier": "^2.8.8",
     "process": "^0.11.10",
     "remark-cli": "^12.0.1",
     "remark-preset-lint-markdown-style-guide": "^4.0.0",
@@ -99,7 +100,8 @@
     "test:jest": "jest",
     "test:jest:watch": "jest --watch",
     "tsc": "tsc",
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "prettier": "prettier --write ."
   },
   "license": "MIT",
   "author": "Electron Community",
