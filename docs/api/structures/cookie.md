@@ -13,3 +13,4 @@
   the number of seconds since the UNIX epoch. Not provided for session
   cookies.
 * `sameSite` string - The [Same Site](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) policy applied to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.
+* `secureUpdate` boolean (optional) - Whether the cookie is marked as Secure Update. This property enhances the security of cookies by ensuring that they are only sent over secure connections.

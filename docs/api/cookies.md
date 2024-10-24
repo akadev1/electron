@@ -79,6 +79,7 @@ The following methods are available on instances of `Cookies`:
   * `secure` boolean (optional) - Filters cookies by their Secure property.
   * `session` boolean (optional) - Filters out session or persistent cookies.
   * `httpOnly` boolean (optional) - Filters cookies by httpOnly.
+  * `secureUpdate` boolean (optional) - Filters cookies by their Secure Update property.
 
 Returns `Promise<Cookie[]>` - A promise which resolves an array of cookie objects.
 
@@ -101,6 +102,7 @@ the response.
     seconds since the UNIX epoch. If omitted then the cookie becomes a session
     cookie and will not be retained between sessions.
   * `sameSite` string (optional) - The [Same Site](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) policy to apply to this cookie.  Can be `unspecified`, `no_restriction`, `lax` or `strict`.  Default is `lax`.
+  * `secureUpdate` boolean (optional) - Whether the cookie should be marked as Secure Update. Defaults to false.
 
 Returns `Promise<void>` - A promise which resolves when the cookie has been set
 
@@ -124,3 +126,7 @@ Writes any unwritten cookies data to disk
 Cookies written by any method will not be written to disk immediately, but will be written every 30 seconds or 512 operations
 
 Calling this method can cause the cookie to be written to disk immediately.
+
+### Security Update
+
+A new security feature has been added to the `Cookies` class. The `secureUpdate` property has been introduced to enhance the security of cookies. This property can be used in the `cookies.set` and `cookies.get` methods to set and filter cookies based on their Secure Update status.
