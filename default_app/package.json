@@ -2,5 +2,8 @@
   "name": "electron",
   "productName": "Electron",
   "main": "main.js",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
 }
