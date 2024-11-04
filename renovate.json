@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "schedule": ["daily"],
+  "packageRules": [
+    {
+      "managers": ["npm"],
+      "schedule": ["daily"],
+      "updateTypes": ["minor", "patch"]
+    },
+    {
+      "managers": ["github-actions"],
+      "schedule": ["daily"],
+      "updateTypes": ["minor", "patch"]
+    }
+  ],
+  "prConcurrentLimit": 2,
+  "prHourlyLimit": 0
+}
