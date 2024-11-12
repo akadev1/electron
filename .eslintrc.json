@@ -1,8 +1,8 @@
 {
   "root": true,
-  "extends": "standard",
+  "extends": ["standard", "prettier"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "env": {
     "browser": true
   },
@@ -52,7 +52,8 @@
         "index",
         "type"
       ]
-    }]
+    }],
+    "prettier/prettier": "error"
   },
   "parserOptions": {
     "ecmaVersion": 6,
