@@ -11,7 +11,7 @@
     "@electron/github-app-auth": "^2.2.1",
     "@electron/lint-roller": "^2.4.0",
     "@electron/typescript-definitions": "^9.0.0",
-    "@octokit/rest": "^20.0.2",
+    "@octokit/rest": "^21.0.2",
     "@primer/octicons": "^10.0.0",
     "@types/minimist": "^1.2.5",
     "@types/node": "^22.7.7",
@@ -57,7 +57,7 @@
     "ts-node": "6.2.0",
     "typescript": "^5.6.2",
     "url": "^0.11.4",
-    "webpack": "^5.95.0",
+    "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "wrapper-webpack-plugin": "^2.2.0"
   },
