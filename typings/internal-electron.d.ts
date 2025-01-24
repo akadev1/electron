@@ -63,9 +63,20 @@ declare namespace Electron {
       overrideGlobalValueFromIsolatedWorld(keys: string[], value: any): void;
       overrideGlobalValueWithDynamicPropsFromIsolatedWorld(keys: string[], value: any): void;
       overrideGlobalPropertyFromIsolatedWorld(keys: string[], getter: Function, setter?: Function): void;
-      isInMainWorld(): boolean;
     }
   }
+
+  interface ServiceWorkers {
+    _getWorkerFromVersionIDIfExists(versionId: number): Electron.ServiceWorkerMain | undefined;
+    _stopAllWorkers(): Promise<void>;
+  }
+
+  interface ServiceWorkerMain {
+    _startExternalRequest(hasTimeout: boolean): { id: string, ok: boolean };
+    _finishExternalRequest(uuid: string): void;
+    _countExternalRequests(): number;
+  }
+
 
   interface TouchBar {
     _removeFromWindow: (win: BaseWindow) => void;
@@ -76,7 +87,7 @@ declare namespace Electron {
     getOwnerBrowserWindow(): Electron.BrowserWindow | null;
     getLastWebPreferences(): Electron.WebPreferences | null;
     _getProcessMemoryInfo(): Electron.ProcessMemoryInfo;
-    _getPreloadPaths(): string[];
+    _getPreloadScript(): Electron.PreloadScript | null;
     equal(other: WebContents): boolean;
     browserWindowOptions: BrowserWindowConstructorOptions;
     _windowOpenHandler: ((details: Electron.HandlerDetails) => any) | null;
@@ -329,6 +340,11 @@ declare namespace ElectronInternal {
 
   class WebContents extends Electron.WebContents {
     static create(opts?: Electron.WebPreferences): Electron.WebContents;
+  }
+
+  interface PreloadScript extends Electron.PreloadScript {
+    contents?: string;
+    error?: Error;
   }
 }
 
