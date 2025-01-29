@@ -26,6 +26,7 @@ jobs:
           project-number: 90
           field: Status
           field-value: ✅ Triaged
+          fail-if-item-not-found: false
   issue-labeled-blocked:
     name: blocked/* label added
     if: startsWith(github.event.label.name, 'blocked/')
@@ -44,6 +45,7 @@ jobs:
           project-number: 90
           field: Status
           field-value: 🛑 Blocked
+          fail-if-item-not-found: false
   issue-labeled-blocked-need-repro:
     name: blocked/need-repro label added
     if: github.event.label.name == 'blocked/need-repro'

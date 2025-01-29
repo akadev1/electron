@@ -150,13 +150,11 @@ class ScriptExecutionCallback {
         "An unknown exception occurred while getting the result of the script";
     {
       v8::TryCatch try_catch(isolate);
-      context_bridge::ObjectCache object_cache;
       v8::Local<v8::Context> source_context =
           result->GetCreationContextChecked();
-      maybe_result =
-          PassValueToOtherContext(source_context, promise_.GetContext(), result,
-                                  source_context->Global(), &object_cache,
-                                  false, 0, BridgeErrorTarget::kSource);
+      maybe_result = PassValueToOtherContext(
+          source_context, promise_.GetContext(), result,
+          source_context->Global(), false, BridgeErrorTarget::kSource);
       if (maybe_result.IsEmpty() || try_catch.HasCaught()) {
         success = false;
       }
@@ -592,7 +590,7 @@ class WebFrameRenderer final : public gin::Wrappable<WebFrameRenderer>,
 
     content::RenderFrame* render_frame;
     if (!MaybeGetRenderFrame(isolate, "insertCSS", &render_frame))
-      return std::u16string();
+      return {};
 
     blink::WebFrame* web_frame = render_frame->GetWebFrame();
     if (web_frame->IsWebLocalFrame()) {
@@ -602,7 +600,7 @@ class WebFrameRenderer final : public gin::Wrappable<WebFrameRenderer>,
                             css_origin)
           .Utf16();
     }
-    return std::u16string();
+    return {};
   }
 
   void RemoveInsertedCSS(v8::Isolate* isolate, const std::u16string& key) {
@@ -736,7 +734,7 @@ class WebFrameRenderer final : public gin::Wrappable<WebFrameRenderer>,
                                              std::move(completion_callback));
 
     render_frame->GetWebFrame()->RequestExecuteScript(
-        world_id, base::make_span(sources),
+        world_id, base::span(sources),
         has_user_gesture ? blink::mojom::UserActivationOption::kActivate
                          : blink::mojom::UserActivationOption::kDoNotActivate,
         script_execution_type, load_blocking_option, base::NullCallback(),

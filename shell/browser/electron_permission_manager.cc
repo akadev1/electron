@@ -193,7 +193,7 @@ void ElectronPermissionManager::RequestPermissionsWithDetails(
       if (permission == blink::PermissionType::MIDI_SYSEX) {
         content::ChildProcessSecurityPolicy::GetInstance()
             ->GrantSendMidiSysExMessage(
-                render_frame_host->GetProcess()->GetID());
+                render_frame_host->GetProcess()->GetDeprecatedID());
       } else if (permission == blink::PermissionType::GEOLOCATION) {
         ElectronBrowserMainParts::Get()
             ->GetGeolocationControl()
@@ -278,8 +278,7 @@ ElectronPermissionManager::GetPermissionResultForOriginWithoutContext(
     const url::Origin& embedding_origin) {
   blink::mojom::PermissionStatus status = GetPermissionStatus(
       permission, requesting_origin.GetURL(), embedding_origin.GetURL());
-  return content::PermissionResult(
-      status, content::PermissionStatusSource::UNSPECIFIED);
+  return {status, content::PermissionStatusSource::UNSPECIFIED};
 }
 
 void ElectronPermissionManager::CheckBluetoothDevicePair(

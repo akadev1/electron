@@ -27,29 +27,14 @@
 #include "ui/views/view_class_properties.h"
 #include "ui/views/widget/widget.h"
 
-#if BUILDFLAG(IS_MAC)
-#include "shell/browser/ui/cocoa/delayed_native_view_host.h"
-#endif
-
 namespace electron::api {
 
 WebContentsView::WebContentsView(v8::Isolate* isolate,
                                  gin::Handle<WebContents> web_contents)
-#if BUILDFLAG(IS_MAC)
-    : View(new DelayedNativeViewHost(web_contents->inspectable_web_contents()
-                                         ->GetView()
-                                         ->GetNativeView())),
-#else
-    : View(web_contents->inspectable_web_contents()->GetView()->GetView()),
-#endif
+    : View(web_contents->inspectable_web_contents()->GetView()),
       web_contents_(isolate, web_contents.ToV8()),
       api_web_contents_(web_contents.get()) {
-#if !BUILDFLAG(IS_MAC)
-  // On macOS the View is a newly-created |DelayedNativeViewHost| and it is our
-  // responsibility to delete it. On other platforms the View is created and
-  // managed by InspectableWebContents.
   set_delete_view(false);
-#endif
   view()->SetProperty(
       views::kFlexBehaviorKey,
       views::FlexSpecification(views::MinimumFlexSizeRule::kScaleToMinimum,
@@ -66,7 +51,7 @@ gin::Handle<WebContents> WebContentsView::GetWebContents(v8::Isolate* isolate) {
   if (api_web_contents_)
     return gin::CreateHandle(isolate, api_web_contents_.get());
   else
-    return gin::Handle<WebContents>();
+    return {};
 }
 
 void WebContentsView::SetBackgroundColor(std::optional<WrappedSkColor> color) {
@@ -153,7 +138,7 @@ gin::Handle<WebContentsView> WebContentsView::Create(
     if (gin::ConvertFromV8(isolate, web_contents_view_obj, &web_contents_view))
       return web_contents_view;
   }
-  return gin::Handle<WebContentsView>();
+  return {};
 }
 
 // static

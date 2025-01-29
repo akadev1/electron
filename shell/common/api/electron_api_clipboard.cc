@@ -44,8 +44,8 @@ std::vector<std::u16string> Clipboard::AvailableFormats(
 bool Clipboard::Has(const std::string& format_string,
                     gin_helper::Arguments* args) {
   ui::Clipboard* clipboard = ui::Clipboard::GetForCurrentThread();
-  ui::ClipboardFormatType format(
-      ui::ClipboardFormatType::GetType(format_string));
+  ui::ClipboardFormatType format =
+      ui::ClipboardFormatType::CustomPlatformType(format_string);
   if (format.GetName().empty())
     format = ui::ClipboardFormatType::CustomPlatformType(format_string);
   return clipboard->IsFormatAvailable(format, GetClipboardBuffer(args),
@@ -231,7 +231,7 @@ gfx::Image Clipboard::ReadImage(gin_helper::Arguments* args) {
     args->ThrowError(
         "clipboard.readImage is available only after app ready in the main "
         "process");
-    return gfx::Image();
+    return {};
   }
 
   ui::Clipboard* clipboard = ui::Clipboard::GetForCurrentThread();
@@ -271,7 +271,7 @@ void Clipboard::WriteImage(const gfx::Image& image,
 #if !BUILDFLAG(IS_MAC)
 void Clipboard::WriteFindText(const std::u16string& text) {}
 std::u16string Clipboard::ReadFindText() {
-  return std::u16string();
+  return {};
 }
 #endif
 

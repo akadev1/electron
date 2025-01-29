@@ -36,3 +36,4 @@ jobs:
           project-number: 90
           field: Status
           field-value: 📥 Was Blocked
+          fail-if-item-not-found: false
